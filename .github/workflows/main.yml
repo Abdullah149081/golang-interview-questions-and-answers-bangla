@@ -1,22 +1,44 @@
 name: Sync Fork
 
-on:  
-  workflow_dispatch:
+` file:
+
+```yaml
+name: Sync Fork
+
+on:
   schedule:
-    - cron: "0 20 * * 4"
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   sync:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
-      - name: Sync and merge upstream repository
-        uses: dabreadman/sync-upstream-repo@v1.3.0
-        with:
-          upstream_repo: "https://github.com/dynamiclance/golang-interview-questions-and-answers-bangla" # Replace with actual upstream repository URL
-          upstream_branch: "main"  # Adjust if different
-          downstream_branch: "main"  # Adjust if needed
-          token: ${{ secrets.GITHUB_TOKEN }}
-       
+    steps:
+    - name: Checkout forked repository
+      uses: actions/checkout@v2
+      with:
+        repository    - cron: '0 0 * * *'
+
+jobs:
+  sync:
+    runs-on: Abdullah149081/golang-interview-questions-and-answers-bangla
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Set up git remote for upstream
+      run: |
+        git remote set-url origin https://: ubuntu-latest
+
+    steps:
+    - name: Checkout forkgithub.com/Abdullah149081/golang-interview-questions-and-answers-bangla.git
+        git remote add upstream https://github.com/original_owner/original_repo.git
+        git fetch upstream
+
+    - name: Merge upstream changes repository
+      uses: actions/checkout@v2
+      with
+      run: |
+        git merge upstream/main
+        git push origin main
